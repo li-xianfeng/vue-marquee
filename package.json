@@ -1,12 +1,12 @@
 {
-  "name": "zz-swipe",
+  "name": "vue-marquee",
   "version": "1.0.0",
-  "description": "基于VUE的广播消息轮播组件",
+  "description": "基于VUE的垂直跑马灯（广播消息轮播组件）",
   "main": "dist/index.js",
   "keywords": [
+    "marquee",
     "broadcast",
     "vue",
-    "slide",
     "swipe"
   ],
   "author": "lixianfeng0917@gmail.com",

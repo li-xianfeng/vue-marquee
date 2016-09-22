@@ -4,7 +4,7 @@ import Broadcast from '../dist/index.js';
 new Vue({
     el: '#app',
     components: {
-        'broadcast-news': Broadcast,
+        'broadcast-news': Marquee,
         'item': BroadcastNewsItem
     },
     data: function(){

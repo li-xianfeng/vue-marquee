@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["Broadcast"] = factory();
+		exports["VueMarquee"] = factory();
 	else
-		root["Broadcast"] = factory();
+		root["VueMarquee"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -60,13 +60,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _BroadcastNews = __webpack_require__(1);
+	var _VueMarquee = __webpack_require__(1);
 
-	var _BroadcastNews2 = _interopRequireDefault(_BroadcastNews);
+	var _VueMarquee2 = _interopRequireDefault(_VueMarquee);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = _BroadcastNews2.default;
+	exports.default = _VueMarquee2.default;
 
 /***/ },
 /* 1 */
@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/lixianfeng/Documents/work/git/zz-broadcast/src/BroadcastNews.vue"
+	  var id = "/Users/lixianfeng/Documents/work/git/vue-marquee/src/VueMarquee.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -107,8 +107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21349f8e&file=BroadcastNews.vue!./../node_modules/less-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./BroadcastNews.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21349f8e&file=BroadcastNews.vue!./../node_modules/less-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./BroadcastNews.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-6604485b&file=VueMarquee.vue!./../node_modules/less-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./VueMarquee.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-6604485b&file=VueMarquee.vue!./../node_modules/less-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./VueMarquee.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -453,6 +453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//             <slot></slot>
 	//         </ul>
 	//     </div>
+	//
 	// </template>
 	// <script>
 	exports.default = {
@@ -617,7 +618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <div class=\"zzui-broadcast-window\" :style=\"{height: height + 'px'}\">\n        <ul class=\"zzui-broadcast-container\" v-el:container>\n            <slot></slot>\n        </ul>\n    </div>\n";
+	module.exports = "\n    <div class=\"zzui-broadcast-window\" :style=\"{height: height + 'px'}\">\n        <ul class=\"zzui-broadcast-container\" v-el:container>\n            <slot></slot>\n        </ul>\n    </div>\n    \n";
 
 /***/ }
 /******/ ])

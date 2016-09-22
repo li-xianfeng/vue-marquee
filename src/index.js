@@ -1,2 +1,2 @@
-import Broadcast from './BroadcastNews.vue';
-export default Broadcast;
+import VueMarquee from './VueMarquee.vue';
+export default VueMarquee;
