@@ -1,14 +1,7 @@
 # vue-marquee
 
-基于`vue`的垂直跑马灯（广播消息轮播组件）
+基于`vue2`的垂直跑马灯（广播消息轮播组件）
 
-## Demo
-
-``` 
-1. npm install  
-2. npm run dev
-3. 浏览器运行localhost:8080
-```
 
 ## Install
 

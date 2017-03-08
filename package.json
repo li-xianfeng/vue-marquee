@@ -1,7 +1,7 @@
 {
   "name": "vue-marquee",
-  "version": "1.0.0",
-  "description": "基于VUE的垂直跑马灯（广播消息轮播组件）",
+  "version": "1.2.0",
+  "description": "基于vue2的垂直跑马灯",
   "main": "dist/index.js",
   "keywords": [
     "marquee",

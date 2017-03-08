@@ -126,7 +126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, ".zzui-broadcast-window {\n  width: 100%;\n  overflow: hidden;\n}\n.zzui-broadcast-window .zzui-broadcast-container {\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  height: auto;\n}\n.zzui-broadcast-window .zzui-broadcast-container li {\n  margin: 0;\n}\n", ""]);
+	exports.push([module.id, ".zzui-broadcast-window {\n  width: 100%;\n  overflow: hidden;\n  -webkit-transform: translateZ(0);\n          transform: translateZ(0);\n  height: 100%;\n}\n.zzui-broadcast-window .zzui-broadcast-container {\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  height: auto;\n}\n.zzui-broadcast-window .zzui-broadcast-container li {\n  margin: 0;\n}\n", ""]);
 
 	// exports
 
@@ -449,7 +449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	// <template>
 	//     <div class="zzui-broadcast-window" :style="{height: height + 'px'}">
-	//         <ul class="zzui-broadcast-container" v-el:container>
+	//         <ul class="zzui-broadcast-container" ref="container">
 	//             <slot></slot>
 	//         </ul>
 	//     </div>
@@ -482,7 +482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: 'up'
 	        }
 	    },
-	    ready: function ready() {
+	    mounted: function mounted() {
 	        this.fixList();
 	        this.start();
 	    },
@@ -493,29 +493,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * 将单个item高度设置为广播视窗高度
 	         */
 	        fixList: function fixList() {
+	            var _this = this;
+
 	            var cloneNode = void 0,
-	                firstItem = this.$els.container.firstElementChild;
+	                firstItem = this.$refs.container.firstElementChild;
 
 	            // 根据item高度设置视窗container高度
-	            this.length = this.$els.container.children.length;
-	            this.height = firstItem.offsetHeight;
+	            this.length = this.$refs.container.children.length;
 
 	            if (this.direction === 'up') {
 	                // 向上则clone第一个item置于列表末端
 	                cloneNode = firstItem.cloneNode(true);
-	                this.$els.container.appendChild(cloneNode);
+	                this.$refs.container.appendChild(cloneNode);
 	            } else {
 	                // 向下则clone最后一个item置于列表首部
-	                cloneNode = this.$els.container.lastElementChild.cloneNode(true);
-	                this.$els.container.insertBefore(cloneNode, firstItem);
+	                cloneNode = this.$refs.container.lastElementChild.cloneNode(true);
+	                this.$refs.container.insertBefore(cloneNode, firstItem);
 	            }
+
+	            this.$nextTick(function () {
+	                // 用总高度/length，减小较小
+	                _this.height = _this.$refs.container.offsetHeight / (_this.length + 1);
+	            });
 	        },
 
 	        /*
 	         * 启动轮播
 	         */
 	        start: function start() {
-	            var _this = this;
+	            var _this2 = this;
 
 	            var currenTransitionTime = void 0,
 	                currenTranslateY = void 0;
@@ -524,34 +530,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.direction === 'down') this.quickJump(false);
 
 	            setInterval(function () {
-	                if (_this.direction === 'up') {
-	                    _this.currentIndex += 1;
+	                if (_this2.direction === 'up') {
+	                    _this2.currentIndex += 1;
 	                } else {
-	                    _this.currentIndex -= 1;
+	                    _this2.currentIndex -= 1;
 	                }
 
 	                // 正常轮播transition时间为用户设置duration时间
-	                currenTransitionTime = 'transform ' + _this.duration + 'ms ease-in-out';
-	                _this.setTransition(_this.$els.container, currenTransitionTime);
+	                currenTransitionTime = 'transform ' + _this2.duration + 'ms ease-in-out';
+	                _this2.setTransition(_this2.$refs.container, currenTransitionTime);
 
 	                // 正常轮播每次currenTranslateY增加一个item高度
-	                if (_this.direction === 'up') {
-	                    currenTranslateY = -_this.currentIndex * _this.height + 'px';
+	                if (_this2.direction === 'up') {
+	                    currenTranslateY = -_this2.currentIndex * _this2.height + 'px';
 	                } else {
-	                    currenTranslateY = -(_this.currentIndex + 1) * _this.height + 'px';
+	                    currenTranslateY = -(_this2.currentIndex + 1) * _this2.height + 'px';
 	                }
 
-	                _this.setTransform(_this.$els.container, 'translate3d(0,' + currenTranslateY + ',0)');
+	                _this2.setTransform(_this2.$refs.container, 'translate3d(0,' + currenTranslateY + ',0)');
 
 	                // 当滑动到首尾边界替补item时，需即刻跳转到正确item位置
-	                if (_this.currentIndex == _this.length) {
+	                if (_this2.currentIndex == _this2.length) {
 	                    setTimeout(function () {
-	                        _this.quickJump(true);
-	                    }, _this.duration);
-	                } else if (_this.currentIndex == -1) {
+	                        _this2.quickJump(true);
+	                    }, _this2.duration);
+	                } else if (_this2.currentIndex == -1) {
 	                    setTimeout(function () {
-	                        _this.quickJump(false);
-	                    }, _this.duration);
+	                        _this2.quickJump(false);
+	                    }, _this2.duration);
 	                }
 	            }, this.interval + this.duration);
 	        },
@@ -564,7 +570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var currenTranslateY = void 0,
 	                currenTransitionTime = 'transform 0ms ease-in-out';
 
-	            this.setTransition(this.$els.container, currenTransitionTime);
+	            this.setTransition(this.$refs.container, currenTransitionTime);
 
 	            if (toFirst) {
 	                // 跳转到首个item
@@ -575,7 +581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                currenTranslateY = -(this.currentIndex + 1) * this.height + 'px';
 	            }
 
-	            this.setTransform(this.$els.container, 'translate3d(0,' + currenTranslateY + ',0)');
+	            this.setTransform(this.$refs.container, 'translate3d(0,' + currenTranslateY + ',0)');
 	        },
 
 	        /*
@@ -601,6 +607,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	//     .zzui-broadcast-window{
 	//         width: 100%;
 	//         overflow: hidden;
+	//         transform: translateZ(0);
+	//         height: 100%;
 	//         .zzui-broadcast-container{
 	//             padding: 0;
 	//             margin: 0;
@@ -618,7 +626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <div class=\"zzui-broadcast-window\" :style=\"{height: height + 'px'}\">\n        <ul class=\"zzui-broadcast-container\" v-el:container>\n            <slot></slot>\n        </ul>\n    </div>\n    \n";
+	module.exports = "\n    <div class=\"zzui-broadcast-window\" :style=\"{height: height + 'px'}\">\n        <ul class=\"zzui-broadcast-container\" ref=\"container\">\n            <slot></slot>\n        </ul>\n    </div>\n    \n";
 
 /***/ }
 /******/ ])

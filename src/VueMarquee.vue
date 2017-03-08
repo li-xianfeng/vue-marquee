@@ -1,6 +1,6 @@
 <template>
     <div class="zzui-broadcast-window" :style="{height: height + 'px'}">
-        <ul class="zzui-broadcast-container" v-el:container>
+        <ul class="zzui-broadcast-container" ref="container">
             <slot></slot>
         </ul>
     </div>
@@ -31,7 +31,7 @@ export default{
             default: 'up'
         }
     },
-    ready (){
+    mounted (){
         this.fixList();
         this.start();
     },
@@ -42,21 +42,25 @@ export default{
          */
         fixList (){
             let cloneNode,
-                firstItem = this.$els.container.firstElementChild;
+                firstItem = this.$refs.container.firstElementChild;
 
             // 根据item高度设置视窗container高度
-            this.length = this.$els.container.children.length;
-            this.height = firstItem.offsetHeight;
+            this.length = this.$refs.container.children.length;
 
             if(this.direction === 'up'){
                 // 向上则clone第一个item置于列表末端
                 cloneNode = firstItem.cloneNode(true);
-                this.$els.container.appendChild(cloneNode);
+                this.$refs.container.appendChild(cloneNode);
             }else{
                 // 向下则clone最后一个item置于列表首部
-                cloneNode = this.$els.container.lastElementChild.cloneNode(true);
-                this.$els.container.insertBefore(cloneNode, firstItem);
+                cloneNode = this.$refs.container.lastElementChild.cloneNode(true);
+                this.$refs.container.insertBefore(cloneNode, firstItem);
             }
+
+            this.$nextTick(()=>{
+                // 用总高度/length，减小较小
+                this.height = this.$refs.container.offsetHeight / (this.length + 1);
+            });
         },
         /*
          * 启动轮播
@@ -77,7 +81,7 @@ export default{
 
                 // 正常轮播transition时间为用户设置duration时间
                 currenTransitionTime = 'transform ' + this.duration+ 'ms ease-in-out';
-                this.setTransition(this.$els.container, currenTransitionTime);
+                this.setTransition(this.$refs.container, currenTransitionTime);
 
                 // 正常轮播每次currenTranslateY增加一个item高度
                 if(this.direction === 'up'){
@@ -86,7 +90,7 @@ export default{
                     currenTranslateY = - (this.currentIndex + 1) * this.height + 'px';
                 }
 
-                this.setTransform(this.$els.container, 'translate3d(0,' + currenTranslateY + ',0)');
+                this.setTransform(this.$refs.container, 'translate3d(0,' + currenTranslateY + ',0)');
 
                 // 当滑动到首尾边界替补item时，需即刻跳转到正确item位置
                 if(this.currentIndex == this.length){
@@ -108,7 +112,7 @@ export default{
             let currenTranslateY,
                 currenTransitionTime = 'transform 0ms ease-in-out';
 
-            this.setTransition(this.$els.container, currenTransitionTime);
+            this.setTransition(this.$refs.container, currenTransitionTime);
 
             if(toFirst){
                 // 跳转到首个item
@@ -119,7 +123,7 @@ export default{
                 currenTranslateY = - (this.currentIndex + 1) * this.height + 'px';
             }
             
-            this.setTransform(this.$els.container, 'translate3d(0,' + currenTranslateY + ',0)');
+            this.setTransform(this.$refs.container, 'translate3d(0,' + currenTranslateY + ',0)');
         },
         /*
          * transition添加浏览器前缀
@@ -144,6 +148,8 @@ export default{
     .zzui-broadcast-window{
         width: 100%;
         overflow: hidden;
+        transform: translateZ(0);
+        height: 100%;
         .zzui-broadcast-container{
             padding: 0;
             margin: 0;
