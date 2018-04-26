@@ -37,7 +37,7 @@ export default{
         this.start();
     },
     destroyed () {
-    clearInterval(this.timer)
+        clearInterval(this.timer)
     },
     methods: {
         /*
