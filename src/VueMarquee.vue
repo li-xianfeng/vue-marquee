@@ -12,7 +12,8 @@ export default{
         return {
             height: '',
             length: 0,
-            currentIndex: 0
+            currentIndex: 0,
+            timer: null
         }
     },
     props: {
@@ -34,6 +35,9 @@ export default{
     mounted (){
         this.fixList();
         this.start();
+    },
+    destroyed () {
+    clearInterval(this.timer)
     },
     methods: {
         /*
@@ -72,7 +76,7 @@ export default{
             // 方向向下，列表初始时跳转到最后item
             if(this.direction === 'down')this.quickJump(false);
 
-            setInterval(()=>{
+            this.timer = setInterval(()=>{
                 if(this.direction === 'up'){
                     this.currentIndex += 1;
                 }else{
